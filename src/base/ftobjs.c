@@ -498,8 +498,8 @@
             prev->next = cur->next;
 
           /* finalize client-specific data */
-          if ( slot->generic.finalizer )
-            slot->generic.finalizer( slot );
+          if ( slot->_generic.finalizer )
+            slot->_generic.finalizer( slot );
 
           ft_glyphslot_done( slot );
           FT_FREE( slot );
@@ -895,8 +895,8 @@
                 FT_Driver  driver )
   {
     /* finalize client-specific data */
-    if ( size->generic.finalizer )
-      size->generic.finalizer( size );
+    if ( size->_generic.finalizer )
+      size->_generic.finalizer( size );
 
     /* finalize format-specific stuff */
     if ( driver->clazz->done_size )
@@ -962,8 +962,8 @@
     face->size = NULL;
 
     /* now discard client data */
-    if ( face->generic.finalizer )
-      face->generic.finalizer( face );
+    if ( face->_generic.finalizer )
+      face->_generic.finalizer( face );
 
     /* discard charmaps */
     destroy_charmaps( face, memory );
@@ -1234,7 +1234,7 @@
   /* there's a Mac-specific extended implementation of FT_New_Face() */
   /* in src/base/ftmac.c                                             */
 
-#ifndef FT_MACINTOSH
+#if !defined(FT_CONFIG_OPTION_MAC_FONTS) || !defined( FT_MACINTOSH )  /* TODO: Unity change to review */
 
   /* documentation is in freetype.h */
 
@@ -2176,7 +2176,7 @@
     FT_Module*   cur;
     FT_Module*   limit;
 
-#ifndef FT_CONFIG_OPTION_MAC_FONTS
+#ifndef FT_CONFIG_OPTION_MAC_FONTS /* Check if this is ok with Unity */
     FT_UNUSED( test_mac_fonts );
 #endif
 
@@ -2269,7 +2269,7 @@
           if ( !error )
             goto Success;
 
-#ifdef FT_CONFIG_OPTION_MAC_FONTS
+#ifdef FT_CONFIG_OPTION_MAC_FONTS /* Check if this is ok in Unity */
           if ( test_mac_fonts                                           &&
                ft_strcmp( cur[0]->clazz->module_name, "truetype" ) == 0 &&
                FT_ERR_EQ( error, Table_Missing )                        )

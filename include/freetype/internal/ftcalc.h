@@ -76,7 +76,15 @@ FT_BEGIN_HEADER
 
   /* documentation is in freetype.h */
 
-  static __inline__ FT_Int32
+  static /* TODO: Unity change to review */
+  /* Making this piece inline on clang causes crash in the caller (registers corrupted) */
+  /* so for clang force it to be not inlined */
+#ifdef __clang__
+  __attribute__((noinline))
+#else
+  __inline__
+#endif
+  FT_Int32
   FT_MulFix_arm( FT_Int32  a,
                  FT_Int32  b )
   {
@@ -241,7 +249,7 @@ FT_BEGIN_HEADER
 
 #ifdef FT_CONFIG_OPTION_INLINE_MULFIX
 #ifdef FT_MULFIX_ASSEMBLER
-#define FT_MulFix( a, b )  FT_MULFIX_ASSEMBLER( (FT_Int32)(a), (FT_Int32)(b) )
+#define UNITY_FT_MulFix( a, b )  FT_MULFIX_ASSEMBLER( (FT_Int32)(a), (FT_Int32)(b) ) /* TODO: Unity change to review */
 #endif
 #endif
 

@@ -34,6 +34,11 @@
 #ifndef FT2BUILD_H_
 #define FT2BUILD_H_
 
+#define FT2_BUILD_LIBRARY
+
+// Unity: quarantine exported freetype API
+#include "unityquarantine.h"
+
 #include <freetype/config/ftheader.h>
 
 #endif /* FT2BUILD_H_ */

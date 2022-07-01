@@ -155,6 +155,7 @@
     FT_Bytes          p     = table;
     FT_UInt           table_size;
     FT_Bool           need_MarkAttachClassDef;
+    long              version;
 
     OTV_OPTIONAL_TABLE( GlyphClassDef );
     OTV_OPTIONAL_TABLE( AttachListOffset );
@@ -169,7 +170,9 @@
 
     OTV_LIMIT_CHECK( 12 );
 
-    if ( FT_NEXT_ULONG( p ) != 0x10000UL )          /* Version */
+    /* Check table version */
+    version = FT_NEXT_LONG( p );
+    if ( version != 0x10000UL && version != 0x10002UL && version != 0x10003UL )
       FT_INVALID_FORMAT;
 
     /* MarkAttachClassDef has been added to the OpenType */

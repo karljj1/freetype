@@ -91,6 +91,13 @@
 #define FT_COMPONENT  trace_smooth
 
 
+#if defined(__webgl__) || (defined(_AMD64_) && (!PLATFORM_PS4))
+// Hack from http://web.archiveorange.com/archive/v/F3xWZNA8YVAlrel2OSfy
+// we need this for WebGL as it does not support setjmp/longjmp.
+// Disabled for ps4 as it causes crash
+#define FT_AVOID_LONGJMP 1
+#endif
+
 #ifdef STANDALONE_
 
 
@@ -143,9 +150,11 @@
 
 #define ft_memset   memset
 
+#if !defined(__webgl__)
 #define ft_setjmp   setjmp
 #define ft_longjmp  longjmp
 #define ft_jmp_buf  jmp_buf
+#endif
 
 typedef ptrdiff_t  FT_PtrDist;
 
@@ -338,6 +347,14 @@ typedef ptrdiff_t  FT_PtrDist;
 #define DOWNSCALE( x )  ( (x) * ( 64 >> PIXEL_BITS ) )
 #endif
 
+#if defined(_M_X64) // Unity change?
+#include <stdint.h>
+#define JMPBUFALIGN char m_manualAlignmentPadding[16];
+#define GetAlignedJumpBuffer(X) *((jmp_buf*)((((uintptr_t)&((X).m_manualAlignmentPadding))+15)&(~15)))
+#else
+#define JMPBUFALIGN
+#define GetAlignedJumpBuffer(X) ((X).jump_buffer)
+#endif
 
   /* Compute `dividend / divisor' and return both its quotient and     */
   /* remainder, cast to a specific type.  This macro also ensures that */
@@ -434,7 +451,12 @@ typedef ptrdiff_t  FT_PtrDist;
 
   typedef struct  gray_TWorker_
   {
+#if FT_AVOID_LONGJMP /* TODO: Unity change to review */
+    int  outline_decompose_error;
+#else
+    JMPBUFALIGN 
     ft_jmp_buf  jump_buffer;
+#endif
 
     TCoord  ex, ey;
     TCoord  min_ex, max_ex;
@@ -529,9 +551,16 @@ typedef ptrdiff_t  FT_PtrDist;
       pcell = &cell->next;
     }
 
-    if ( ras.num_cells >= ras.max_cells )
-      ft_longjmp( ras.jump_buffer, 1 );
-
+    if ( ras.num_cells >= ras.max_cells ){
+#if FT_AVOID_LONGJMP /* TODO: Unity change to review */
+    {
+      ras.outline_decompose_error = ErrRaster_Memory_Overflow;
+      return;
+    }
+#else
+      ft_longjmp( GetAlignedJumpBuffer(ras) , 1 );
+#endif
+    }
     /* insert new cell */
     cell        = ras.cells + ras.num_cells++;
     cell->x     = x;
@@ -545,6 +574,10 @@ typedef ptrdiff_t  FT_PtrDist;
 
   Found:
     /* update old cell */
+#if FT_AVOID_LONGJMP /* TODO: Unity change to review */
+      if ( !cell )
+        return;
+#endif
     cell->area  += ras.area;
     cell->cover += ras.cover;
   }
@@ -1177,6 +1210,11 @@ typedef ptrdiff_t  FT_PtrDist;
     TPos  x, y;
 
 
+#if FT_AVOID_LONGJMP /* TODO: Unity change to review */
+    if ( ras.outline_decompose_error != 0 )
+      return ras.outline_decompose_error;
+#endif
+
     /* start to a new position */
     x = UPSCALE( to->x );
     y = UPSCALE( to->y );
@@ -1705,7 +1743,18 @@ typedef ptrdiff_t  FT_PtrDist;
       Init_Class_func_interface(&func_interface);
 #endif
 
-    if ( ft_setjmp( ras.jump_buffer ) == 0 )
+#if FT_AVOID_LONGJMP /* TODO: Unity change to review */
+    ras.outline_decompose_error = 0;
+    error = FT_Outline_Decompose( &ras.outline, &func_interface, &ras );
+    if ( !ras.invalid )
+      gray_record_cell( RAS_VAR );
+    if ( ras.outline_decompose_error != 0 )
+    {
+      error = ras.outline_decompose_error;
+      ras.outline_decompose_error = 0;
+    }
+#else
+     if ( ft_setjmp( GetAlignedJumpBuffer(ras) ) == 0 )
     {
       error = FT_Outline_Decompose( &ras.outline, &func_interface, &ras );
       if ( !ras.invalid )
@@ -1721,7 +1770,7 @@ typedef ptrdiff_t  FT_PtrDist;
       FT_TRACE7(( "band [%d..%d]: to be bisected\n",
                   ras.min_ey, ras.max_ey ));
     }
-
+#endif
     return error;
   }
 

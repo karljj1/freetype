@@ -83,6 +83,7 @@
 #define ft_memmove  memmove
 #define ft_memset   memset
 #define ft_strcat   strcat
+#define ft_strncat  strncat /* TODO: Unity change to review */
 #define ft_strcmp   strcmp
 #define ft_strcpy   strcpy
 #define ft_strlen   strlen
@@ -152,7 +153,11 @@
   /*                                                                    */
   /**********************************************************************/
 
-
+#if defined (__webgl__)  /* TODO: Unity change to review */
+#define ft_jmp_buf void*
+#define ft_longjmp(x,y)
+#define ft_setjmp(x) 0
+#else
 #include <setjmp.h>
 
 #define ft_jmp_buf     jmp_buf  /* note: this cannot be a typedef since */
@@ -161,7 +166,7 @@
 
 #define ft_longjmp     longjmp
 #define ft_setjmp( b ) setjmp( *(ft_jmp_buf*) &(b) ) /* same thing here */
-
+#endif
 
   /* the following is only used for debugging purposes, i.e., if */
   /* FT_DEBUG_LEVEL_ERROR or FT_DEBUG_LEVEL_TRACE are defined    */

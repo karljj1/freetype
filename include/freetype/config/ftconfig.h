@@ -98,7 +98,7 @@ FT_BEGIN_HEADER
   /* FT_UNUSED is a macro used to indicate that a given parameter is not  */
   /* used -- this is only used to get rid of unpleasant compiler warnings */
 #ifndef FT_UNUSED
-#define FT_UNUSED( arg )  ( (arg) = (arg) )
+#define FT_UNUSED( arg )  ( (void) (arg) ) /* Change required to compile correctly on Android with Unity */
 #endif
 
 
@@ -137,7 +137,9 @@ FT_BEGIN_HEADER
   /* Classic MacOS compilers */
 #include "ConditionalMacros.h"
 #if TARGET_OS_MAC
-#define FT_MACINTOSH 1
++// We don't define FT_MACINTOSH in Unity, since we always load fonts from memory,
++// so the resource fork based code in ft_mac will not work for loading dfont files.
++//#define FT_MACINTOSH 1
 #endif
 
 #endif

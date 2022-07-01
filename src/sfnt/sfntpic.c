@@ -32,8 +32,10 @@
   void
   FT_Destroy_Class_sfnt_services( FT_Library          library,
                                   FT_ServiceDescRec*  clazz );
+  #ifdef TT_CONFIG_OPTION_BDF // Unity change?
   void
   FT_Init_Class_sfnt_service_bdf( FT_Service_BDFRec*  clazz );
+  #endif 
   void
   FT_Init_Class_sfnt_interface( FT_Library       library,
                                 SFNT_Interface*  clazz );

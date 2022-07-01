@@ -102,7 +102,7 @@ FT_BEGIN_HEADER
   /*                       cff:no-stem-darkening=1 \                       */
   /*                       autofitter:warping=1                            */
   /*                                                                       */
-#define FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
+/* #define FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES */
 
 
   /*************************************************************************/
@@ -178,7 +178,7 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /*   Define this macro if you want to enable this `feature'.             */
   /*                                                                       */
-#define FT_CONFIG_OPTION_USE_LZW
+/*#define FT_CONFIG_OPTION_USE_LZW*/
 
 
   /*************************************************************************/
@@ -193,7 +193,7 @@ FT_BEGIN_HEADER
   /*   Define this macro if you want to enable this `feature'.  See also   */
   /*   the macro FT_CONFIG_OPTION_SYSTEM_ZLIB below.                       */
   /*                                                                       */
-#define FT_CONFIG_OPTION_USE_ZLIB
+/*#define FT_CONFIG_OPTION_USE_ZLIB*/
 
 
   /*************************************************************************/
@@ -400,7 +400,7 @@ FT_BEGIN_HEADER
   /* supply font data incrementally as the document is parsed, such        */
   /* as the Ghostscript interpreter for the PostScript language.           */
   /*                                                                       */
-#define FT_CONFIG_OPTION_INCREMENTAL
+/*#define FT_CONFIG_OPTION_INCREMENTAL*/
 
 
   /*************************************************************************/
@@ -571,7 +571,7 @@ FT_BEGIN_HEADER
   /*                                                                       */
   /* (By default, the module uses `PSNames' to extract glyph names.)       */
   /*                                                                       */
-#define TT_CONFIG_OPTION_POSTSCRIPT_NAMES
+/*#define TT_CONFIG_OPTION_POSTSCRIPT_NAMES*/
 
 
   /*************************************************************************/
@@ -585,7 +585,7 @@ FT_BEGIN_HEADER
   /* Accessing SFNT names is done through the functions declared in        */
   /* `ftsnames.h'.                                                         */
   /*                                                                       */
-#define TT_CONFIG_OPTION_SFNT_NAMES
+/*#define TT_CONFIG_OPTION_SFNT_NAMES*/
 
 
   /*************************************************************************/
@@ -684,7 +684,7 @@ FT_BEGIN_HEADER
   /* [1] http://www.microsoft.com/typography/cleartype/truetypecleartype.aspx */
   /*                                                                       */
 /* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  1         */
-#define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2
+/* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2 */
 /* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  ( 1 | 2 ) */
 
 
@@ -722,7 +722,7 @@ FT_BEGIN_HEADER
   /* Define TT_CONFIG_OPTION_BDF if you want to include support for        */
   /* an embedded `BDF ' table within SFNT-based bitmap formats.            */
   /*                                                                       */
-#define TT_CONFIG_OPTION_BDF
+/*#define TT_CONFIG_OPTION_BDF */
 
 
   /*************************************************************************/
@@ -795,7 +795,7 @@ FT_BEGIN_HEADER
   /* compilation of the Multiple Masters font support in the Type 1        */
   /* driver.                                                               */
   /*                                                                       */
-#undef T1_CONFIG_OPTION_NO_MM_SUPPORT
+/*#undef T1_CONFIG_OPTION_NO_MM_SUPPORT*/
 
 
   /*************************************************************************/

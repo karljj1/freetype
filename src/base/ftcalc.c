@@ -41,7 +41,7 @@
 
 
 #ifdef FT_MULFIX_ASSEMBLER
-#undef FT_MulFix
+#undef UNITY_FT_MulFix /* TODO: Unity change to review */
 #endif
 
 /* we need to emulate a 64-bit data type if a real one isn't available */

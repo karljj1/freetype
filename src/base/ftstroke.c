@@ -31,7 +31,11 @@
   /* allocated  in `ftglyph.c', and use the FT_OUTLINE_GLYPH_CLASS_GET */
   /* macro to access it when FT_CONFIG_OPTION_PIC is defined           */
 #ifndef FT_CONFIG_OPTION_PIC
+//#ifdef __cplusplus /* TODO: Unity change to review */
+//  extern "C" const FT_Glyph_Class  ft_outline_glyph_class;
+//#else
   FT_CALLBACK_TABLE const FT_Glyph_Class  ft_outline_glyph_class;
+//#endif
 #endif
 
 
