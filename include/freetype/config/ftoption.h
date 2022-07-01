@@ -331,7 +331,7 @@ FT_BEGIN_HEADER
    *   You would normally undefine this configuration macro when building a
    *   version of FreeType that doesn't contain a Type~1 or CFF driver.
    */
-#define FT_CONFIG_OPTION_POSTSCRIPT_NAMES
+/*#define FT_CONFIG_OPTION_POSTSCRIPT_NAMES*/
 
 
   /**************************************************************************
@@ -538,7 +538,7 @@ FT_BEGIN_HEADER
    *
    *   More details on the hooks can be found in file `otsvg.h`.
    */
-#define FT_CONFIG_OPTION_SVG
+/*#define FT_CONFIG_OPTION_SVG*/
 
 
   /**************************************************************************
@@ -579,22 +579,6 @@ FT_BEGIN_HEADER
    * module (namely TrueType~& OpenType).
    */
 #define TT_CONFIG_OPTION_COLOR_LAYERS
-
-
-  /**************************************************************************
-   *
-   * Define `TT_CONFIG_OPTION_POSTSCRIPT_NAMES` if you want to be able to
-   * load and enumerate the glyph Postscript names in a TrueType or OpenType
-   * file.
-   *
-   * Note that when you do not compile the 'psnames' module by undefining the
-   * above `FT_CONFIG_OPTION_POSTSCRIPT_NAMES`, the 'sfnt' module will
-   * contain additional code used to read the PS Names table from a font.
-   *
-   * (By default, the module uses 'psnames' to extract glyph names.)
-   */
-/*#define TT_CONFIG_OPTION_POSTSCRIPT_NAMES*/
-
 
   /**************************************************************************
    *

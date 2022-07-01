@@ -634,16 +634,17 @@ typedef ptrdiff_t  FT_PtrDist;
 
       /* insert new cell */
       cell = ras.cell_free++;
-    if ( ras.num_cells >= ras.max_cells ){
+      if (cell >= ras.cell_null) {
 #if FT_AVOID_LONGJMP /* TODO: Unity change to review */
     {
-      ras.outline_decompose_error = ErrRaster_Memory_Overflow;
-      return;
+        ras.outline_decompose_error = Smooth_Err_Raster_Overflow;
+        return;
     }
 #else
-      ft_longjmp( GetAlignedJumpBuffer(ras) , 1 );
+        ft_longjmp( GetAlignedJumpBuffer(ras) , 1 );
 #endif
     }
+
       cell->x     = ex;
       cell->area  = 0;
       cell->cover = 0;
@@ -1469,7 +1470,6 @@ typedef ptrdiff_t  FT_PtrDist;
     if ( ras.outline_decompose_error != 0 )
       return ras.outline_decompose_error;
 #endif
-
     /* start to a new position */
     x = UPSCALE( to->x );
     y = UPSCALE( to->y );
@@ -1952,12 +1952,9 @@ typedef ptrdiff_t  FT_PtrDist;
   {
     int  error;
 
-
 #if FT_AVOID_LONGJMP /* TODO: Unity change to review */
     ras.outline_decompose_error = 0;
     error = FT_Outline_Decompose( &ras.outline, &func_interface, &ras );
-    if ( !ras.invalid )
-      gray_record_cell( RAS_VAR );
     if ( ras.outline_decompose_error != 0 )
     {
       error = ras.outline_decompose_error;
