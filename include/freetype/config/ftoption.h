@@ -331,7 +331,7 @@ FT_BEGIN_HEADER
    *   You would normally undefine this configuration macro when building a
    *   version of FreeType that doesn't contain a Type~1 or CFF driver.
    */
-/*#define FT_CONFIG_OPTION_POSTSCRIPT_NAMES*/
+/* #define FT_CONFIG_OPTION_POSTSCRIPT_NAMES */
 
 
   /**************************************************************************
@@ -572,13 +572,28 @@ FT_BEGIN_HEADER
 #define TT_CONFIG_OPTION_EMBEDDED_BITMAPS
 
 
+  /*************************************************************************/
+  /*                                                                       */
+  /* Define TT_CONFIG_OPTION_POSTSCRIPT_NAMES if you want to be able to    */
+  /* load and enumerate the glyph Postscript names in a TrueType or        */
+  /* OpenType file.                                                        */
+  /*                                                                       */
+  /* Note that when you do not compile the `PSNames' module by undefining  */
+  /* the above FT_CONFIG_OPTION_POSTSCRIPT_NAMES, the `sfnt' module will   */
+  /* contain additional code used to read the PS Names table from a font.  */
+  /*                                                                       */
+  /* (By default, the module uses `PSNames' to extract glyph names.)       */
+  /*                                                                       */
+/*#define TT_CONFIG_OPTION_POSTSCRIPT_NAMES*/
+
+
   /**************************************************************************
    *
    * Define `TT_CONFIG_OPTION_COLOR_LAYERS` if you want to support colored
    * outlines (from the 'COLR'/'CPAL' tables) in all formats using the 'sfnt'
    * module (namely TrueType~& OpenType).
    */
-#define TT_CONFIG_OPTION_COLOR_LAYERS
+/*#define TT_CONFIG_OPTION_COLOR_LAYERS*/
 
   /**************************************************************************
    *
