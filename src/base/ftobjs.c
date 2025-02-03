@@ -4710,6 +4710,7 @@
 
     switch ( slot->format )
     {
+    case FT_GLYPH_FORMAT_NONE:
     default:
       if ( slot->internal->load_flags & FT_LOAD_COLOR )
       {

@@ -112,7 +112,7 @@ FT_BEGIN_HEADER
    * third-party code depends on it.
    */
 #ifndef FT_UNUSED
-#define FT_UNUSED( arg )  ( (arg) = (arg) )
+#define FT_UNUSED( arg )  ( (void) (arg) ) /* Change required to compile correctly on Android with Unity */
 #endif
 
 

@@ -41,7 +41,9 @@
   /* Classic MacOS compilers */
 #include "ConditionalMacros.h"
 #if TARGET_OS_MAC
-#define FT_MACINTOSH 1
+// We don't define FT_MACINTOSH in Unity, since we always load fonts from memory,
+// so the resource fork based code in ft_mac will not work for loading dfont files.
+//#define FT_MACINTOSH 1
 #endif
 
 #endif  /* Mac support */

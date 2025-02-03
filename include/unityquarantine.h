@@ -73,6 +73,7 @@
 #define FT_Get_Char_Index UNITY_FT_Get_Char_Index
 #define FT_Get_Charmap_Index UNITY_FT_Get_Charmap_Index
 #define FT_Get_First_Char UNITY_FT_Get_First_Char
+#define FT_Get_Font_Format UNITY_FT_Get_Font_Format
 #define FT_Get_Glyph UNITY_FT_Get_Glyph
 #define FT_Get_Glyph_Name UNITY_FT_Get_Glyph_Name
 #define FT_Get_Kerning UNITY_FT_Get_Kerning
@@ -331,6 +332,7 @@
 #define tt_face_get_name UNITY_tt_face_get_name
 #define tt_face_build_cmaps UNITY_tt_face_build_cmaps
 #define tt_get_cmap_info UNITY_tt_get_cmap_info
+#define tt_get_glyph_name UNITY_tt_get_glyph_name
 #define tt_face_get_metrics UNITY_tt_face_get_metrics
 #define tt_face_load_hhea UNITY_tt_face_load_hhea
 #define tt_face_load_hmtx UNITY_tt_face_load_hmtx
